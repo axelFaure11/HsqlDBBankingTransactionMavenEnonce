@@ -58,9 +58,6 @@ public class BankingDAO {
 				// On débite le 1° client
 				statement.setFloat( 1, amount * -1);
 				statement.setInt(2, fromID);
-                                if(balanceForCustomer(fromID)-amount < 0){
-                                    throw new Exception("solde insuffisant");
-                                }
 				int numberUpdated = statement.executeUpdate();
                                 
 				// On crédite le 2° client
