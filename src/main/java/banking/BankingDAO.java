@@ -52,11 +52,17 @@ public class BankingDAO {
 			
 			myConnection.setAutoCommit(false); // On démarre une transaction
 			try {
+                                if(balanceForCustomer(fromID)==0 || balanceForCustomer(toID) == 0){
+                                    throw new Exception("Un des compte n'existe pas");
+                                }
 				// On débite le 1° client
 				statement.setFloat( 1, amount * -1);
 				statement.setInt(2, fromID);
+                                if(balanceForCustomer(fromID)-amount < 0){
+                                    throw new Exception("solde insuffisant");
+                                }
 				int numberUpdated = statement.executeUpdate();
-
+                                
 				// On crédite le 2° client
 				statement.clearParameters();
 				statement.setFloat( 1, amount);
